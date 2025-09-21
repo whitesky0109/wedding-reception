@@ -123,4 +123,20 @@
       line-height: 1.4;
     }
   }
+
+  .yellow-line {
+    color: #FABE00;
+  }
+
+  .subway-num {
+    display: inline-block;
+    color: #fff;
+    border-radius: 30px;
+    padding: 0 15px 0px;
+    width: auto;
+    margin-right: 3px;
+    font-size: 16px;
+    line-height: 30px;
+    font-weight: 500;
+  }
 }

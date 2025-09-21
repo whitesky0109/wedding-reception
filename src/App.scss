@@ -208,6 +208,12 @@ h2 {
   }
 }
 
-div.break {
-  height: 1rem;
+div {
+  &.break {
+    height: 1rem;
+  }
+
+  .bold-text {
+    color: var(--theme-color);
+  }
 }
