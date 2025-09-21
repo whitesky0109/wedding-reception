@@ -10,6 +10,7 @@ import { GuestBook } from "./component/guestbook"
 import { LazyDiv } from "./component/lazyDiv"
 import { ShareButton } from "./component/shareButton"
 import { STATIC_ONLY } from "./env"
+import { BRIDE_INFO, GROOM_INFO } from "./const"
 
 function App() {
   return (
@@ -21,7 +22,9 @@ function App() {
           <Cover />
 
           {/* 모시는 글 */}
-          <Invitation />
+          <Invitation
+            supportCall={[...BRIDE_INFO, ...GROOM_INFO].some(item => !!item.phone)}
+          />
         </LazyDiv>
 
         <LazyDiv className="card-group">
