@@ -18,7 +18,7 @@ export const LOCATION_ADDRESS = "경기 수원시 팔달구 효원로 289"
 export const SHARE_ADDRESS = LOCATION
 export const SHARE_ADDRESS_TITLE = LOCATION
 
-export const WEDDING_HALL_POSITION = [37.261632, 127.033406]
+export const WEDDING_HALL_POSITION = [127.033406, 37.261632]
 
 export const NMAP_PLACE_ID = 12055125
 export const KMAP_PLACE_ID = 1818839884

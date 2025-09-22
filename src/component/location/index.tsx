@@ -24,7 +24,7 @@ export const Location = () => {
           <div className="heading">지하철</div>
           <div />
           <div className="content">
-            <span className="subway-num yellow-line">수인분당선</span>
+            <span className="subway-num yellow-line">분당선</span>
             <b>수원시청역 10번출구</b> 바로 앞
           </div>
         </div>
