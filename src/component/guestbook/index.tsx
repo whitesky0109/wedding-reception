@@ -3,8 +3,9 @@ import { Button } from "../button"
 import { dayjs } from "../../const"
 import { LazyDiv } from "../lazyDiv"
 import { useModal } from "../modal"
-import offlineGuestBook from "./offlineGuestBook.json"
-import { SERVER_URL } from "../../env"
+import GuestbookService from "../../supabase/GuestbookService";
+import { SUPABASE_URL } from "../../env"
+
 
 const RULES = {
   name: {
@@ -35,21 +36,13 @@ export const GuestBook = () => {
   const [posts, setPosts] = useState<Post[]>([])
 
   const loadPosts = async () => {
-    if (SERVER_URL) {
+    if (SUPABASE_URL) {
       try {
-        const res = await fetch(
-          `${SERVER_URL}/guestbook?offset=${0}&limit=${3}`,
-        )
-        if (res.ok) {
-          const data = await res.json()
-
-          setPosts(data.posts)
-        }
+        const { Posts } = await GuestbookService.getGuestbook(10, 0);
+        setPosts(Posts);
       } catch (error) {
         console.error("Error loading posts:", error)
       }
-    } else {
-      setPosts(offlineGuestBook.slice(0, 3))
     }
   }
 
@@ -69,7 +62,7 @@ export const GuestBook = () => {
             <button
               className="close-button"
               onClick={async () => {
-                if (SERVER_URL) {
+                if (SUPABASE_URL) {
                   openModal({
                     className: "delete-guestbook-modal",
                     closeOnClickBackground: false,
@@ -109,7 +102,7 @@ export const GuestBook = () => {
             <div className="title">
               <div className="name">{post.name}</div>
               <div className="date">
-                {dayjs.unix(post.timestamp).format("YYYY-MM-DD")}
+                {dayjs(post.timestamp).format("YYYY-MM-DD")}
               </div>
             </div>
             <div className="content">{post.content}</div>
@@ -119,7 +112,7 @@ export const GuestBook = () => {
 
       <div className="break" />
 
-      {SERVER_URL && (
+      {SUPABASE_URL && (
         <>
           <Button
             onClick={() =>
@@ -237,16 +230,7 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
             return
           }
 
-          const res = await fetch(`${SERVER_URL}/guestbook`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ name, content, password }),
-          })
-          if (!res.ok) {
-            throw new Error(res.statusText)
-          }
+          await GuestbookService.createGuestbookPost(name, content, password);
 
           alert("방명록 작성이 완료되었습니다.")
           closeModal()
@@ -264,7 +248,7 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
         type="text"
         placeholder="이름을 입력해주세요."
         className="name"
-        ref={(ref) => (inputRef.current.name = ref as HTMLInputElement)}
+        ref={(ref) => { inputRef.current.name = ref as HTMLInputElement }}
         maxLength={RULES.name.maxLength}
       />
       내용
@@ -272,7 +256,7 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
         disabled={loading}
         placeholder="축하 메세지를 100자 이내로 입력해주세요."
         className="content"
-        ref={(ref) => (inputRef.current.content = ref as HTMLTextAreaElement)}
+        ref={(ref) => { inputRef.current.content = ref as HTMLTextAreaElement }}
         maxLength={RULES.content.maxLength}
       />
       비밀번호
@@ -281,7 +265,7 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
         type="password"
         placeholder="비밀번호를 입력해주세요."
         className="password"
-        ref={(ref) => (inputRef.current.password = ref as HTMLInputElement)}
+        ref={(ref) => { inputRef.current.password = ref as HTMLInputElement }}
         maxLength={RULES.password.maxLength}
       />
     </form>
@@ -299,35 +283,19 @@ const AllGuestBookModal = ({
   const { openModal, closeModal } = useModal()
 
   const loadPage = async (page: number) => {
-    setCurrentPage(page)
-    if (SERVER_URL) {
+    setCurrentPage(page);
+    if (SUPABASE_URL) {
       try {
         const offset = page * POSTS_PER_PAGE
-        const res = await fetch(
-          `${SERVER_URL}/guestbook?offset=${offset}&limit=${POSTS_PER_PAGE}`,
-        )
-        if (res.ok) {
-          const data = await res.json()
-
-          setPosts(data.posts)
-          setTotalPages(Math.ceil(data.total / POSTS_PER_PAGE))
-          if (data.total < offset) {
-            setCurrentPage(Math.ceil(data.total / POSTS_PER_PAGE) - 1)
-          }
+        const { Posts, Total } = await GuestbookService.getGuestbook(POSTS_PER_PAGE, offset);
+        setPosts(Posts)
+        setTotalPages(Math.ceil(Total / POSTS_PER_PAGE))
+        if (Total < offset) {
+          setCurrentPage(Math.ceil(Total / POSTS_PER_PAGE) - 1)
         }
       } catch (error) {
         console.error("Error loading posts:", error)
       }
-    } else {
-      setCurrentPage(page)
-
-      setPosts(
-        offlineGuestBook.slice(
-          page * POSTS_PER_PAGE,
-          (page + 1) * POSTS_PER_PAGE,
-        ),
-      )
-      setTotalPages(Math.ceil(offlineGuestBook.length / POSTS_PER_PAGE))
     }
   }
 
@@ -350,7 +318,7 @@ const AllGuestBookModal = ({
             <div
               className="close-button"
               onClick={async () => {
-                if (SERVER_URL) {
+                if (SUPABASE_URL) {
                   openModal({
                     className: "delete-guestbook-modal",
                     closeOnClickBackground: false,
@@ -391,7 +359,7 @@ const AllGuestBookModal = ({
             <div className="title">
               <div className="name">{post.name}</div>
               <div className="date">
-                {dayjs.unix(post.timestamp).format("YYYY-MM-DD")}
+                {dayjs(post.timestamp).format("YYYY-MM-DD")}
               </div>
             </div>
             <div className="content">{post.content}</div>
@@ -471,12 +439,9 @@ const DeleteGuestBookModal = ({
             return
           }
 
-          const result = await fetch(`${SERVER_URL}/guestbook`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: postId, password }),
-          })
+          await GuestbookService.deleteGuestbookPPost(postId, password);
 
+          /*
           if (!result.ok) {
             if (result.status === 403) {
               alert("비밀번호가 일치하지 않습니다.")
@@ -485,6 +450,7 @@ const DeleteGuestBookModal = ({
             }
             return
           }
+          */
 
           alert("삭제되었습니다.")
           closeModal()

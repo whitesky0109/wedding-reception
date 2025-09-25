@@ -13,10 +13,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
     "@types/node": "^24.5.2",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.3",
+    "bcryptjs": "^3.0.2",
     "dayjs": "^1.11.10",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
