@@ -18,7 +18,6 @@ class GuestbookService {
     const { error: error2, count } = await supabase
       .from('guestbook')
       .select('*', { count: 'exact', head: true });
-    console.log(count);
 
     if (error2) {
       throw error2;
@@ -47,20 +46,20 @@ class GuestbookService {
   }
 
   async deleteGuestbookPPost(id: number, password: string) {
-    const { data: targetPassword, error: error1 } = await supabase
+    const { data: post, error: error1 } = await supabase
       .from('guestbook')
       .select('password')
       .eq('id', id)
-      .eq('valid', true)
-      .single<string>()
+      .is('valid', true)
+      .single<{ password: string }>();
 
     if (error1) {
       throw error1;
     }
 
     let passwordMatch = false;
-    if (targetPassword) {
-      passwordMatch = bcrypt.compareSync(password, targetPassword);
+    if (post) {
+      passwordMatch = bcrypt.compareSync(password, post.password);
     }
 
     if (!passwordMatch) {
