@@ -32,7 +32,7 @@ class GuestbookService {
   async createGuestbookPost(name: string, content: string, password: string) {
     const { data, error: error1 } = await supabase
       .from('guestbook')
-      .insert<IGuestbook>([{
+      .insert([{
         name,
         content,
         password: bcrypt.hashSync(password, 14),
@@ -68,7 +68,7 @@ class GuestbookService {
 
     const { data: result, error: error2 } = await supabase
       .from('guestbook')
-      .update<IGuestbook>({ valid: false })
+      .update({ valid: false })
       .eq('id', id);
 
     if (error2) {
@@ -80,13 +80,3 @@ class GuestbookService {
 }
 
 export default new GuestbookService();
-
-export type IGuestbook = {
-  name: string,
-  content: string,
-  password: string,
-  timestamp: number,
-} & Partial<{
-  id: number, // auto increment
-  valid: boolean,
-}>;

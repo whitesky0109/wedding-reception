@@ -4,7 +4,7 @@ class AttendanceService {
   async createAttendance(side: string, name: string, meal: string, count: number) {
     const { data, error } = await supabase
       .from('attendance')
-      .insert<IAttendance>([{ side, name, meal, count }]);
+      .insert([{ side, name, meal, count }]);
 
     if (error) {
       throw error;
@@ -16,10 +16,3 @@ class AttendanceService {
 
 
 export default new AttendanceService();
-
-export type IAttendance = {
-  side: string,
-  name: string,
-  meal: string,
-  count: number,
-};
