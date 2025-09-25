@@ -11,7 +11,8 @@ import { useEffect, useRef, useState } from "react"
 import HeartIcon from "../../icons/heart-icon.svg?react"
 import CalendarIcon from "../../icons/calendar-icon.svg?react"
 import MarkerIcon from "../../icons/marker-icon.svg?react"
-import { SERVER_URL } from "../../env"
+import { SUPABASE_URL } from "../../env"
+import AttendanceService from "../../supabase/AttendanceService"
 
 const RULES = {
   name: {
@@ -34,7 +35,7 @@ export const AttendanceInfo = () => {
     if (initialized.current) return
     initialized.current = true
 
-    if (!SERVER_URL || WEDDING_DATE.isBefore(now.current))
+    if (!SUPABASE_URL || WEDDING_DATE.isBefore(now.current))
       return
 
     openModal({
@@ -85,7 +86,7 @@ export const AttendanceInfo = () => {
     })
   }, [openModal, closeModal])
 
-  if (!SERVER_URL || WEDDING_DATE.isBefore(now.current))
+  if (!SUPABASE_URL || WEDDING_DATE.isBefore(now.current))
     return null
 
   return (
@@ -179,19 +180,7 @@ const AttendanceModalContent = () => {
             return
           }
 
-          const res = await fetch(
-            `${SERVER_URL}/attendance`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ side, name, meal, count }),
-            },
-          )
-          if (!res.ok) {
-            throw new Error(res.statusText)
-          }
+          await AttendanceService.createAttendance(side, name, meal, count);
 
           alert("참석 의사가 성공적으로 전달되었습니다.")
           closeModal()
