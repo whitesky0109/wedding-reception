@@ -1,3 +1,5 @@
+import { Sound } from "react-sounds"
+
 import { Cover } from "./component/cover"
 import { Location } from "./component/location"
 import "./App.scss"
@@ -11,10 +13,15 @@ import { LazyDiv } from "./component/lazyDiv"
 import { ShareButton } from "./component/shareButton"
 import { SUPABASE_URL } from "./env"
 import { BRIDE_INFO, GROOM_INFO } from "./const"
+import bgmUrl from "./sounds/bgm.mp3";
 
 function App() {
   return (
     <div className="background">
+      <Sound
+        name={bgmUrl}
+        trigger='mount'
+      />
       <BGEffect />
       <div className="card-view">
         <LazyDiv className="card-group">
