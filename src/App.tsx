@@ -21,6 +21,7 @@ function App() {
       <Sound
         name={bgmUrl}
         trigger='mount'
+        options={{ loop: true }}
       />
       <BGEffect />
       <div className="card-view">
