@@ -1,11 +1,11 @@
 {
-  "name": "wedding-invitation",
+  "name": "wedding-reception",
   "version": "0.1.0",
-  "description": "A wedding invitation web page template",
-  "author": "Ju Ho Nam <jhnamnam@gmail.com> (https://juhonamnam.github.io/)",
+  "description": "A wedding reception web page template",
+  "author": "gunwoo cho <whitesky0109@gmail.com> (https://whitesky0109.github.io/)",
   "license": "MIT",
   "private": true,
-  "homepage": "https://juhonamnam.github.io/wedding-invitation",
+  "homepage": "https://juhonamnam.github.io/wedding-reception",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
