@@ -7,11 +7,8 @@ import { BGEffect } from "./component/bgEffect"
 import { Invitation } from "./component/invitation"
 import { Calendar } from "./component/calendar"
 import { Gallery } from "./component/gallery"
-import { Information } from "./component/information"
-import { GuestBook } from "./component/guestbook"
 import { LazyDiv } from "./component/lazyDiv"
 import { ShareButton } from "./component/shareButton"
-import { SUPABASE_URL } from "./env"
 import { BRIDE_INFO, GROOM_INFO } from "./const"
 import bgmUrl from "./sounds/bgm.mp3";
 
@@ -36,7 +33,7 @@ function App() {
         </LazyDiv>
 
         <LazyDiv className="card-group">
-          {/* 결혼식 날짜 (달력) */}
+          {/* 피로연 날짜 (달력) */}
           <Calendar />
 
           {/* 겔러리 */}
@@ -46,13 +43,6 @@ function App() {
         <LazyDiv className="card-group">
           {/* 오시는길 */}
           <Location />
-        </LazyDiv>
-
-        <LazyDiv className="card-group">
-          {/* 마음 전하기 */}
-          <Information />
-          {/* 방명록 */}
-          {SUPABASE_URL && <GuestBook />}
         </LazyDiv>
 
         <ShareButton />

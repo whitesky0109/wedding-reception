@@ -9,19 +9,19 @@ dayjs.locale("ko")
 
 export { dayjs }
 
-export const WEDDING_DATE = dayjs.tz("2025-12-27 12:30", "Asia/Seoul")
+export const WEDDING_DATE = dayjs.tz("2025-12-13 12:00", "Asia/Seoul")
 export const HOLIDAYS = [25];
 
-export const LOCATION = "파티움하우스 수원";
-export const LOCATION_ADDRESS = "경기 수원시 팔달구 효원로 289"
+export const LOCATION = "그린웨딩타운 연회장";
+export const LOCATION_ADDRESS = "전북 남원시 양림길 66";
 
 export const SHARE_ADDRESS = LOCATION
 export const SHARE_ADDRESS_TITLE = LOCATION
 
-export const WEDDING_HALL_POSITION = [127.033406, 37.261632]
+export const WEDDING_HALL_POSITION = [127.3900718, 35.4031089]
 
-export const NMAP_PLACE_ID = 12055125
-export const KMAP_PLACE_ID = 1818839884
+export const NMAP_PLACE_ID = 1188833482
+export const KMAP_PLACE_ID = 8711548
 
 export const BRIDE_FULLNAME = "오미화"
 export const BRIDE_FIRSTNAME = "미화"
@@ -59,13 +59,13 @@ export const GROOM_INFO = [
     relation: "신랑",
     name: GROOM_FULLNAME,
     // phone: "010-2732-0936",
-    account: "우리은행 1002-151-105517",
+    // account: "우리은행 1002-151-105517",
   },
   {
     relation: "신랑 아버지",
     name: GROOM_FATHER,
     // phone: "010-8504-0936",
-    account: "농협 356-1566-2790-53",
+    // account: "농협 356-1566-2790-53",
   },
   {
     relation: "신랑 어머니",
