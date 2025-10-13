@@ -68,6 +68,17 @@ export const ShareButton = () => {
                     baseUrl,
                 },
               },
+              {
+                title: "본식 초대장",
+                link: {
+                  mobileWebUrl:
+                    window.location.protocol +
+                    "//whitesky0109.github.io/wedding-invitation",
+                  webUrl:
+                    window.location.protocol +
+                    "//whitesky0109.github.io/wedding-invitation",
+                },
+              },
             ],
           })
         }}
