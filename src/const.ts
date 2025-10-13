@@ -15,7 +15,7 @@ export const HOLIDAYS = [25];
 export const LOCATION = "그린웨딩타운 1층 에메랄드홀";
 export const LOCATION_ADDRESS = "전북 남원시 양림길 66";
 
-export const SHARE_ADDRESS = LOCATION
+export const SHARE_ADDRESS = "그린웨딩타운";
 export const SHARE_ADDRESS_TITLE = LOCATION
 
 export const WEDDING_HALL_POSITION = [127.3900718, 35.4031089]
