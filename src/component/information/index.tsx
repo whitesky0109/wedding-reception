@@ -10,11 +10,11 @@ export const Information1 = () => {
     <>
       <h2 className="english">Information</h2>
       <div className="info-card">
-        <div className="label">식사 안내</div>
+        <div className="label">일정</div>
         <div className="content">
-          식사시간: 12시 00분 ~ 14시 30분
+          식사시간: 12시 00분 ~ 13시 00분
           <br />
-          장소: 1층 에메랄드홀
+          장소: 그린웨딩타운 1층 에메랄드홀
         </div>
       </div>
     </>
@@ -94,12 +94,30 @@ export const Information2 = () => {
   )
 }
 
+export const Information3 = () => {
+  return (
+    <>
+      <div className="info-card">
+        <div className="label">본식</div>
+        <div className="content">
+          2025년 12월 27일 오전 12시 30분
+          <br />
+          장소: 파티하우스 수원 그레스켈리홀(2F)
+        </div>
+      </div>
+    </>
+  )
+}
+
 export const Information = () => {
   if (STATIC_ONLY) {
     return (
       <>
         <LazyDiv className="card information">
           <Information1 />
+        </LazyDiv>
+        <LazyDiv className="card information">
+          <Information3 />
         </LazyDiv>
         <LazyDiv className="card information">
           <Information2 />
@@ -111,6 +129,7 @@ export const Information = () => {
   return (
     <LazyDiv className="card information">
       <Information1 />
+      <Information3 />
       <Information2 />
       {/*<AttendanceInfo />*/}
     </LazyDiv>

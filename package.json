@@ -5,7 +5,7 @@
   "author": "gunwoo cho <whitesky0109@gmail.com> (https://whitesky0109.github.io/)",
   "license": "MIT",
   "private": true,
-  "homepage": "https://juhonamnam.github.io/wedding-reception",
+  "homepage": "https://whitesky0109.github.io/wedding-reception",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
