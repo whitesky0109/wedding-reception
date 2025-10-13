@@ -12,7 +12,7 @@ export { dayjs }
 export const WEDDING_DATE = dayjs.tz("2025-12-13 12:00", "Asia/Seoul")
 export const HOLIDAYS = [25];
 
-export const LOCATION = "그린웨딩타운 연회장";
+export const LOCATION = "그린웨딩타운 1층 에메랄드홀";
 export const LOCATION_ADDRESS = "전북 남원시 양림길 66";
 
 export const SHARE_ADDRESS = LOCATION
