@@ -14,6 +14,6 @@ class SupabaseClient {
   }
 }
 
-const supabaseClient = new SupabaseClient();
+const supabaseClient = SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY && new SupabaseClient();
 
-export default supabaseClient.supabase;
+export default supabaseClient?.supabase;
