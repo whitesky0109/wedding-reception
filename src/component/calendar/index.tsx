@@ -72,6 +72,9 @@ export const Calendar = () => {
       <h2 className="english">The Wedding Reception Day</h2>
       <div className="break" />
       {WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시 mm분")}
+      <h2 className="english">The Wedding Day</h2>
+      <div className="break" />
+      {MAIN_WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시 mm분")}
       <div className="calendar-wrapper">
         <div className="head holiday">
           <span>Su</span>
