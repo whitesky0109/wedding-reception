@@ -4,6 +4,7 @@ import {
   GROOM_FIRSTNAME,
   HOLIDAYS,
   WEDDING_DATE,
+  MAIN_WEDDING_DATE,
 } from "../../const"
 import { LazyDiv } from "../lazyDiv"
 
@@ -12,6 +13,7 @@ const daysInMonth = WEDDING_DATE.daysInMonth()
 
 export const Calendar = () => {
   const [tsDiff, setTsDiff] = useState(WEDDING_DATE.diff())
+  const [mainTsDiff, setMTsDiff] = useState(MAIN_WEDDING_DATE.diff());
 
   const dayDiff = useMemo(() => {
     const dayOffset = WEDDING_DATE.diff(WEDDING_DATE.startOf("day"))
@@ -39,7 +41,33 @@ export const Calendar = () => {
     return { days, hours, minutes, seconds, isAfter }
   }, [tsDiff])
 
-  return (
+  const mainDayDiff = useMemo(() => {
+    const dayOffset = MAIN_WEDDING_DATE.diff(MAIN_WEDDING_DATE.startOf("day"))
+    return Math.ceil((mainTsDiff - dayOffset) / 1000 / 60 / 60 / 24)
+  }, [mainTsDiff])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const diff = MAIN_WEDDING_DATE.diff()
+
+      setMTsDiff(diff)
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  const mainDiffs = useMemo(() => {
+    const tsDiff_ = Math.abs(mainTsDiff)
+    const seconds = Math.floor((tsDiff_ % 60000) / 1000)
+    const minutes = Math.floor((tsDiff_ % 3600000) / 60000)
+    const hours = Math.floor((tsDiff_ % 86400000) / 3600000)
+    const days = Math.floor(tsDiff_ / 86400000)
+    const isAfter = tsDiff_ < 0
+
+    return { days, hours, minutes, seconds, isAfter }
+  }, [mainTsDiff])
+
+ return (
     <LazyDiv className="card calendar">
       <h2 className="english">The Wedding Reception Day</h2>
       <div className="break" />
@@ -81,6 +109,7 @@ export const Calendar = () => {
           }
 
           const isWeddingDate = date === WEDDING_DATE.date()
+            || date === MAIN_WEDDING_DATE.date();
 
           if (isWeddingDate) {
             classes.push("wedding-date")
@@ -125,6 +154,38 @@ export const Calendar = () => {
           ) : (
             <>
               <span className="d-day">{-dayDiff}</span>일 지났습니다.
+            </>
+          )}
+        </div>
+      </div>
+      <div className="countdown-wrapper">
+        <div className="countdown">
+          <div className="unit">DAY</div>
+          <div />
+          <div className="unit">HOUR</div>
+          <div />
+          <div className="unit">MIN</div>
+          <div />
+          <div className="unit">SEC</div>
+          <div className="count">{mainDiffs.days}</div>
+          <span>:</span>
+          <div className="count">{mainDiffs.hours}</div>
+          <span>:</span>
+          <div className="count">{mainDiffs.minutes}</div>
+          <span>:</span>
+          <div className="count">{mainDiffs.seconds}</div>
+        </div>
+        <div className="message">
+          {GROOM_FIRSTNAME} & {BRIDE_FIRSTNAME}의 본식이{" "}
+          {mainDayDiff > 0 ? (
+            <>
+              <span className="d-day">{mainDayDiff}</span>일 남았습니다.
+            </>
+          ) : mainDayDiff === 0 ? (
+            <>오늘입니다.</>
+          ) : (
+            <>
+              <span className="d-day">{-mainDayDiff}</span>일 지났습니다.
             </>
           )}
         </div>
